@@ -1,31 +1,59 @@
 const express = require("express");
-const formidable = require("formidable");
-const cors = require("cors");
-const path = require("path");
+const router = express.Router();
+const User = require("./model/userModel");
+const userRegister = require("./controllers/userRegister");
+const userLogin = require("./controllers/userLogin");
+const authenticator = require("../middleware/authenticator");
+const getProfile = require("../controllers/getProfile");
+const Feed = require("../controllers/feed");
+const updateProfile = require("../controllers/updateProfile");
+const follow = require("../controllers/follow");
+const comment = require("../controllers/comment");
+const getComment = require("../controllers/getComments");
+const like = require("../controllers/like");
+const savePost = require("../controllers/savePost");
+const getLike = require("../controllers/getLike");
+const myFollowers = require("../controllers/myFollowers");
+const following = require("../controllers/following");
+const all = require("../controllers/createPost");
 
 const app = express();
-const PORT = 8000;
 
-app.use(cors());
+app.use(express.json());
 
-app.post("/upload", async (req, res) => {
-  const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(__dirname, "uploads"); // Specify the upload directory
+const upload = all.upload;
+const createPost = all.createPost;
 
-  const [fields, files] = await form.parse(req);
+app.post("/register", userRegister);
 
-  const imageFile = files.imageFile;
-  if (imageFile) {
-    const myFile = imageFile[0];
-    console.log(myFile.filepath);
-    console.log(fields.text[0]);
+app.post("/login", userLogin);
 
-    // You can further process or save the file as needed
-  }
+app.get("/auth/feed", authenticator, Feed);
 
-  res.json({ ok: true });
-});
+app.get("/auth/user/:id", authenticator, GetUser);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.post("/auth/create", authenticator, upload.single("image"), createPost);
+
+app.post("/auth/post/comment/:id", authenticator, comment);
+
+app.post("/auth/post/like/:id", authenticator, like);
+
+app.get("/auth/post/like/:id", authenticator, getLike);
+
+app.get("/auth/profile", authenticator, getProfile);
+
+app.post("/auth/post/save/:id", authenticator, savePost);
+
+app.get("/auth/post/comment/:id", authenticator, getComment);
+
+app.post("/auth/profile", authenticator, updateProfile);
+
+app.post("/auth/follow", authenticator, follow);
+
+app.get("/auth/followers/:id", authenticator, myFollowers);
+
+app.get("/auth/following/:id", authenticator, following);
+
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
 });
