@@ -22,7 +22,7 @@ const updateProfile = (req, res) => {
 
   User.updateOne({ _id: userId }, { $set: updateData })
     .then(() => {
-      console.log("/////////////////////////////////////////////////////",updateData,"//////////////////////////////////////////');
+      console.log("/////////////////////////////////////////////////////",updateData,"//////////////////////////////////////////");
       res.json({ message: "User updated successfully" });
     })
     .catch((error) => {
