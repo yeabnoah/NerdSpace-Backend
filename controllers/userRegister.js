@@ -19,8 +19,8 @@ const userRegister = (req, res) => {
               username: username,
               password: hashedPassword,
               nerd: nerd,
-              coverImage: `uploads\\assets\\cover-placeholder.jpg`,
-              avatar_image: `uploads\\assets\\avatar.png`,
+              coverImage: `https://i.ibb.co/nwK8w1D/cover-placeholder.jpg`,
+              avatar_image: `https://i.ibb.co/2YbN6NJ/avatar.png`,
             });
             newUser.save().then(() => {
               const token = generateToken(newUser._id);
