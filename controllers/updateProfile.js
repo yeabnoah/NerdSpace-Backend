@@ -1,13 +1,13 @@
 const User = require("../model/userModel");
 
 const updateProfile = (req, res) => {
-  const { name, phone_number, username, email, avatar_image, bio } = req.body;
+  const { name, phone_number, username, email, avatar_image, bio ,  avatar_image, coverImage} = req.body;
   const userId = req.user._id;
 
-  let imageUrl = null;
-  if (req.file) {
-    imageUrl = req.file.path;
-  }
+  // let imageUrl = null;
+  // if (req.file) {
+  //   imageUrl = req.file.path;
+  // }
 
   const updateData = {};
   if (name) updateData.name = name;
@@ -16,7 +16,9 @@ const updateProfile = (req, res) => {
   if (email) updateData.email = email;
   // if (avatar_image) updateData.avatar_image = avatar_image;
   if (bio) updateData.bio = bio;
-  if (req.file) updateData.avatar_image = req.file.path;
+  // if (req.file) updateData.avatar_image = req.file.path;
+  if(avatar_image) updateData.avatar_image = avatar_image;
+  if(coverImage) updateData.coverImage = coverImage;
 
   User.updateOne({ _id: userId }, { $set: updateData })
     .then(() => {
