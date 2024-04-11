@@ -1,7 +1,7 @@
 const User = require("../model/userModel");
 
 const updateProfile = (req, res) => {
-  const { name, phone_number, username, email, avatar_image, bio ,  avatar_image, coverImage} = req.body;
+  const { name, phone_number, username, email, avatar_image, bio , coverImage} = req.body;
   const userId = req.user._id;
 
   // let imageUrl = null;
