@@ -107,7 +107,7 @@ router.post("/auth/post/save/:id", authenticator, savePost);
 
 router.get("/auth/post/comment/:id", authenticator, getComment);
 
-router.post("/auth/profile/", authenticator, upload4, updateProfile);
+router.post("/auth/profile/", authenticator, updateProfile);
 
 router.post("/auth/profile/cover", authenticator, upload2, updateCover);
 
